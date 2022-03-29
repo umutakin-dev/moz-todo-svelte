@@ -104,6 +104,7 @@
 
   <!-- MoreActions -->
   <MoreActions
+    {todos}
     on:checkAll={(e) => checkAllTodos(e.detail)}
     on:removeCompleted={removeCompletedTodos}
   />
