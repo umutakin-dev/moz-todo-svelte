@@ -33,6 +33,11 @@
       : filter === "completed"
       ? todos.filter((t) => t.completed)
       : todos;
+
+  function updateTodo(todo) {
+    const i = todos.findIndex((t) => t.id === todo.id);
+    todos[i] = {...todos[i], ...todo};
+  }
 </script>
 
 <!-- Todos.svelte -->
@@ -66,7 +71,11 @@
   <ul role="list" class="todo-list stack-large" aria-labelledby="list-heading">
     {#each filterTodos(filter, todos) as todo (todo.id)}
       <li class="todo">
-        <Todo {todo} on:remove={(e) => removeTodo(e.detail)} />
+        <Todo
+          {todo}
+          on:update={(e) => updateTodo(e.detail)}
+          on:remove={(e) => removeTodo(e.detail)}
+        />
       </li>
     {:else}
       <li>Nothing to do here!</li>
