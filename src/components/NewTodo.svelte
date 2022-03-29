@@ -2,8 +2,12 @@
   import {createEventDispatcher} from "svelte";
   const dispatch = createEventDispatcher();
 
+  export let autofocus = false;
+
   let name = "";
   let nameEl; // reference to the name input DOM node
+
+  if (autofocus) nameEl.focus();
 
   const addTodo = () => {
     dispatch("addTodo", name);
