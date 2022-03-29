@@ -2,10 +2,11 @@
   import FilterButton from "./components/FilterButton.svelte";
   import Todo from "./components/Todo.svelte";
   import MoreActions from "./components/MoreActions.svelte";
+  import NewTodo from "./components/NewTodo.svelte";
 
   export let todos = [];
 
-  let newTodoName = "";
+  // let newTodoName = "";
   let newTodoId;
 
   $: totalTodos = todos.length;
@@ -22,10 +23,9 @@
     todos = todos.filter((t) => t.id !== todo.id);
   }
 
-  const addTodo = () => {
-    todos = [...todos, {id: newTodoId, name: newTodoName, completed: false}];
-    newTodoName = "";
-  };
+  function addTodo(name) {
+    todos = [...todos, {id: newTodoId, name, completed: false}];
+  }
 
   let filter = "all";
   const filterTodos = (filter, todos) =>
@@ -61,21 +61,7 @@
 <!-- Todos.svelte -->
 <div class="todoapp stack-large">
   <!-- NewTodo -->
-  <form on:submit|preventDefault={addTodo}>
-    <h2 class="label-wrapper">
-      <label for="todo-0" class="label__lg"> What needs to be done? </label>
-    </h2>
-    <input
-      bind:value={newTodoName}
-      type="text"
-      id="todo-0"
-      autocomplete="off"
-      class="input input__lg"
-    />
-    <button type="submit" disabled="" class="btn btn__primary btn__lg">
-      Add
-    </button>
-  </form>
+  <NewTodo on:addTodo={(e) => addTodo(e.detail)} />
 
   <!-- Filter -->
   <FilterButton bind:filter />
@@ -108,8 +94,4 @@
     on:checkAll={(e) => checkAllTodos(e.detail)}
     on:removeCompleted={removeCompletedTodos}
   />
-  <!-- <div class="btn-group">
-    <button type="button" class="btn btn__primary">Check all</button>
-    <button type="button" class="btn btn__primary">Remove completed</button>
-  </div> -->
 </div>
