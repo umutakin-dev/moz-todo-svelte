@@ -3,13 +3,18 @@
   const dispatch = createEventDispatcher();
 
   let name = "";
+  let nameEl; // reference to the name input DOM node
 
   const addTodo = () => {
     dispatch("addTodo", name);
     name = "";
+    nameEl.focus(); // give focus to the name input
   };
 
-  const onCancel = () => (name = "");
+  const onCancel = () => {
+    name = "";
+    nameEl.focus(); // give focus to the name input
+  };
 </script>
 
 <form
@@ -21,6 +26,7 @@
   </h2>
   <input
     bind:value={name}
+    bind:this={nameEl}
     type="text"
     id="todo-0"
     autoComplete="off"
