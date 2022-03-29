@@ -1,7 +1,5 @@
 <script>
   export let filter = "all";
-  export let onClick = (clicked) => {};
-  $: onClick(filter);
 </script>
 
 <div class="filters btn-group stack-exception">
