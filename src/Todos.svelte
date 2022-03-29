@@ -40,8 +40,19 @@
     todos[i] = {...todos[i], ...todo};
   }
 
-  const checkAllTodos = (completed) =>
-    todos.forEach((t) => (t.completed = completed));
+  const checkAllTodos = (completed) => {
+    // Option #1
+    // todos.forEach((t) => (t.completed = completed));
+    // todos = todos;
+
+    // Option #2
+    // todos = todos.map((t) => {
+    //   return {...t, completed: completed};
+    // });
+
+    // Option #3
+    todos.forEach((t, i) => (todos[i].completed = completed));
+  };
 
   const removeCompletedTodos = () =>
     (todos = todos.filter((t) => !t.completed));
