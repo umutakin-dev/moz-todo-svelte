@@ -1,4 +1,5 @@
 <script>
+  import {onMount} from "svelte";
   import {createEventDispatcher} from "svelte";
   const dispatch = createEventDispatcher();
 
@@ -7,7 +8,7 @@
   let name = "";
   let nameEl; // reference to the name input DOM node
 
-  if (autofocus) nameEl.focus();
+  // if (autofocus) nameEl.focus();
 
   const addTodo = () => {
     dispatch("addTodo", name);
@@ -19,6 +20,8 @@
     name = "";
     nameEl.focus(); // give focus to the name input
   };
+
+  onMount(() => autofocus && nameEl.focus());
 </script>
 
 <form
