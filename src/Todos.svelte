@@ -1,18 +1,25 @@
 <script>
   export let todos = [];
 
+  let newTodoName = "";
+  let newTodoId;
+
   $: totalTodos = todos.length;
   $: completedTodos = todos.filter((todo) => todo.completed).length;
-
-  let newTodoName = "";
+  $: {
+    if (totalTodos === 0) {
+      newTodoId = 1;
+    } else {
+      newTodoId = Math.max(...todos.map((t) => t.id)) + 1;
+    }
+  }
 
   function removeTodo(todo) {
     todos = todos.filter((t) => t.id !== todo.id);
   }
 
   const addTodo = () => {
-    todos = [...todos, {id: 999, name: newTodoName, completed: false}];
-    // todos.push({id: 999, name: newTodoName, completed: false});
+    todos = [...todos, {id: newTodoId, name: newTodoName, completed: false}];
     newTodoName = "";
   };
 </script>
