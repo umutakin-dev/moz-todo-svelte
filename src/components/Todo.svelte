@@ -1,9 +1,14 @@
 <script>
-  import {createEventDispatcher} from "svelte";
+  import {selectOnFocus} from "../actions.js";
+  import {createEventDispatcher, tick} from "svelte";
   const dispatch = createEventDispatcher();
+
   export let todo;
 
+  let nameEl;
+
   let editing = false;
+  let editButtonPressed = false;
   let name = todo.name;
 
   function update(updatedTodo) {
@@ -26,8 +31,11 @@
   }
 
   function onEdit() {
-    editing = true;
+    editButtonPressed = true; // user pressed the Edit button, focus will come back to the Edit button
+    editing = true; // enter editing mode
   }
+
+  const focusEditButton = (node) => editButtonPressed && node.focus();
 
   function onToggle() {
     update({completed: !todo.completed});
@@ -48,6 +56,8 @@
         >
         <input
           bind:value={name}
+          bind:this={nameEl}
+          use:selectOnFocus
           type="text"
           id="todo-{todo.id}"
           autoComplete="off"
@@ -79,7 +89,7 @@
       <label for="todo-{todo.id}" class="todo-label">{todo.name}</label>
     </div>
     <div class="btn-group">
-      <button type="button" class="btn" on:click={onEdit}>
+      <button type="button" class="btn" on:click={onEdit} use:focusEditButton>
         Edit<span class="visually-hidden"> {todo.name}</span>
       </button>
       <button type="button" class="btn btn__danger" on:click={onRemove}>
